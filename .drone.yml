@@ -1,0 +1,28 @@
+---
+kind: pipeline
+name: build
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: build-brew
+    image: plugins/docker
+    settings:
+      username: brandonkal
+      password:
+        from_secret: docker_password
+      repo: brandonkal/brew
+      context: './brew-bionic'
+      dockerfile: './brew-bionic/Dockerfile'
+      tags: bionic
+  - name: build-dev
+    image: plugins/docker
+    settings:
+      username: brandonkal
+      password:
+        from_secret: docker_password
+      repo: brandonkal/brew
+      context: './brew-dev'
+      dockerfile: './brew-dev/Dockerfile'
+      tags: dev
